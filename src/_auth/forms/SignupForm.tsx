@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { useToast } from "@/components/ui/use-toast"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,12 +11,14 @@ import { useForm } from "react-hook-form"
 import { SignUpValidation } from '@/lib/validation';
 import Loader from '@/components/shared/Loader';
 import { useCreateUserAccount, useSignInAccount,  } from '@/lib/react-query/queriesAndMutations';
+import { useUserContext } from '@/context/AuthContext';
 
 const SignupForm = () => {
   const { toast } = useToast();
-
-  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
-  const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const navigate = useNavigate();
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount();
+  const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount();
    // 1. Define your form.
    const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
@@ -45,7 +47,14 @@ const SignupForm = () => {
       return toast({ title: 'Sign in failed. Please try again.' })
     }
 
-    
+    const isLogegdIn = await checkAuthUser();
+
+    if(isLogegdIn) {
+      form.reset();
+      navigate('/');
+    } else {
+      return toast({ title: 'Sign in failed. Please try again.' })
+    }
    }
 
   return (
@@ -108,9 +117,9 @@ const SignupForm = () => {
             )}
             />
           <Button type="submit" className='shad-button_primary'>
-            {isCreatingUser ? (
+            {isCreatingAccount ? (
               <div className='flex-center gap-2 '>
-                <Loader/>
+                <Loader/> Loading...
               </div>
             ) : 'Sign up'}
           </Button>

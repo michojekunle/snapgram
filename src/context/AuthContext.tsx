@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { IContextType, IUser } from '@/types';
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { useNavigate } from "react-router-dom";
+
 export const INITIAL_USER = {
     id: '',
     name: '',
@@ -78,4 +79,5 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default AuthProvider
+export default AuthProvider;
+export const useUserContext = () => useContext(AuthContext);

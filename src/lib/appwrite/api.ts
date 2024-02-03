@@ -1,4 +1,4 @@
-import { ID } from 'appwrite';
+import { ID, Query } from 'appwrite';
 
 import { INewUser } from "@/types";
 import { account, appwriteConfig, avatars, databases } from './config';
@@ -59,7 +59,7 @@ export async function signInAccount(user: { email: string; password: string; }) 
     }
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser() {        
     try {
         const currentAccount = await account.get();
         if(!currentAccount) throw Error;
