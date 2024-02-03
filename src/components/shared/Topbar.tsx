@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations'
@@ -12,9 +12,10 @@ const Topbar = () => {
     useEffect(() => {
         if(isSuccess) navigate(0)
     }, [isSuccess])
+
   return (
     <div className='topbar'>
-        <div className='flex-betwen py-4 px-5'>
+        <div className='flex-between py-4 px-5'>
             <Link to='/'>
                 <img
                     src="/assets/images/logo.svg"
