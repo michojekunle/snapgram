@@ -1,7 +1,6 @@
 import { useUserContext } from '@/context/AuthContext'
 import { multiFormatDateString } from '@/lib/utils'
 import { Models } from 'appwrite'
-import { useReducer } from 'react'
 import { Link } from 'react-router-dom'
 import PostStats from './PostStats'
 
@@ -50,7 +49,7 @@ const PostCard = ({ post } : PostCardProps) => {
         <Link to={`/posts/${post.$id}`}>
             <div className='small-medium lg:base-medium py-5'>
                 <p>{post.caption}</p>
-                <ul className='fle gap-1 mt-2'>
+                <ul className='flex gap-1 mt-2'>
                     {post.tags.map((tag: string) => (
                         <li key={tag} className='text-light-3'>
                             #{tag}
