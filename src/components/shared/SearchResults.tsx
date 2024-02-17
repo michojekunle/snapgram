@@ -2,20 +2,17 @@ import { Models } from 'appwrite'
 import Loader from './Loader';
 import GridPostList from './GridPostList';
 
-type ExtendedType = T;
-
-
 type SearchResultProps = {
   isSearchFetching: boolean
-  searchedPosts: Models.Document<T extends { documents: any[] }>[];
+  searchedPosts: Models.DocumentList<Models.Document>;
 }
 
 const SearchResults = ({ isSearchFetching, searchedPosts } : SearchResultProps) => {
   if(isSearchFetching) return <Loader/>
 
-  if(searchedPosts && searchedPosts.documents.length > 0) {
+  if(searchedPosts && searchedPosts?.documents.length > 0) {
     return (
-      <GridPostList posts={searchedPosts.documents} />
+      <GridPostList posts={searchedPosts?.documents} />
     )
   }
   return (
