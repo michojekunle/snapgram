@@ -14,7 +14,7 @@ const Home = () => {
           {isPostLoading && !posts ? (
             <Loader/>
           ) : (
-            <ul className='fle flex-col flex-1 gap-9 w-full'>
+            <ul className='flex flex-col flex-1 gap-9 w-full'>
               {posts?.documents.map((post: Models.Document) => (
                 <li className='' key={post.caption}>
                   <PostCard post={post}/>
